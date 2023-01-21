@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "lib": ["DOM"]
+  },
+  "include": ["**/*.ts", "**/*.d.ts"],
+  "files": ["type/data.d.ts"]
+}
