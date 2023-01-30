@@ -19,8 +19,8 @@ export class TextView extends ResizeView {
   }
 
   public setText(text: string) {
-    const {horizontalPadding = 0, color = 0} = this.textViewProps || {}
-    const textLines = text.split('\n').map(line => ' '.repeat(horizontalPadding) + line + ' '.repeat(horizontalPadding))
+    const {paddingX = 0, color = 0} = this.textViewProps || {}
+    const textLines = text.split('\n').map(line => ' '.repeat(paddingX) + line + ' '.repeat(paddingX))
 
     const view = this.updateView({
       width: textLines.reduce((max, line) => Math.max(max, line.length), 0),

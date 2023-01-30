@@ -13,7 +13,7 @@ declare type ResizeViewProps = {
 declare type TextViewProps = {
   text?: string,
   border?: boolean,
-  horizontalPadding?: number,
+  paddingX?: number,
   color?: number
 }
 
