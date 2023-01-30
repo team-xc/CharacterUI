@@ -5,20 +5,20 @@ const readline = require('readline')
 const {MATERIAL, SIZE} = CONFIG
 
 export class BaseView {
-  private readonly props: ViewProps
+  private readonly baseViewProps: ViewProps
   private container: Container
   private readonly viewId: ViewId
   private children = new Map<ViewId, { self: BaseView, x: number, y: number }>()
 
   constructor(props: ViewProps) {
     const {width, height, border = true} = props
-    this.props = {width, height, border}
+    this.baseViewProps = {width, height, border}
     this.viewId = `view-id:${Date.now() + Math.random()}`
     this.generateContainer()
   }
 
   private generateContainer() {
-    const {width, height, border} = this.props
+    const {width, height, border} = this.baseViewProps
     const container = this.generate(width, height, MATERIAL.BLANK)
 
     this.expandAll(container, SIZE.CONTAINER_SPACE, MATERIAL.SPACE)
@@ -88,7 +88,7 @@ export class BaseView {
   }
 
   public isOutOfContent(x: number, y: number) {
-    const {border} = this.props
+    const {border} = this.baseViewProps
     const {width, height} = this.getContainerSize(this.getContainer())
     const offset = border ? SIZE.CONTAINER_SPACE + SIZE.BORDER_SIZE : SIZE.CONTAINER_SPACE
     return x < offset || x >= width - offset || y < offset || y >= height - offset
@@ -174,7 +174,7 @@ export class BaseView {
   }
 
   public setInner(x: number, y: number, char: string) {
-    const {border} = this.props
+    const {border} = this.baseViewProps
     const offset = border ? SIZE.CONTAINER_SPACE + SIZE.BORDER_SIZE : SIZE.CONTAINER_SPACE
     const actualX = x + offset
     const actualY = y + offset

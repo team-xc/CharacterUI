@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "lib": ["DOM"]
+    "lib": ["DOM"],
+    "target": "ES6"
   },
   "include": ["**/*.ts", "**/*.d.ts"],
   "files": ["type/data.d.ts"]

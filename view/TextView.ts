@@ -1,28 +1,24 @@
 import { BaseView } from './BaseView'
 
 export class TextView extends BaseView {
-  private readonly options: TextViewProps
+  private readonly textViewProps: TextViewProps
   private view: BaseView
   private lastView: BaseView
 
   constructor(props: TextViewProps) {
     super({width: 0, height: 0})
-    this.options = {
-      text: props.text,
-      color: props?.color ?? 0,
-      border: props?.border ?? true,
-      horizontalPadding: props?.horizontalPadding ?? 0
-    }
+    this.textViewProps = props
     this.setText(props.text)
   }
 
   private createView(textLines: string[]) {
-    const {border} = this.options
+    const {border = true} = this.textViewProps || {}
     return new BaseView({
-      width: textLines.reduce((max, line) => Math.max(max, line.length), 0),
-      height: textLines.length,
-      border: border
-    })
+        width: textLines.reduce((max, line) => Math.max(max, line.length), 0),
+        height: textLines.length,
+        border
+      }
+    )
   }
 
   private update(textLines: string[]): boolean {
@@ -40,7 +36,7 @@ export class TextView extends BaseView {
   }
 
   public setText(text: string) {
-    const {horizontalPadding, color} = this.options
+    const {horizontalPadding = 0, color = 0} = this.textViewProps || {}
     const textLines = text.split('\n').map(line => ' '.repeat(horizontalPadding) + line + ' '.repeat(horizontalPadding))
     const isInit = this.update(textLines)
     for (let i = 0; i < textLines.length; i++) {
@@ -50,6 +46,10 @@ export class TextView extends BaseView {
       }
     }
     !isInit && this.lastView.trigger('re-render', this.lastView)
+  }
+
+  public setColor(color: number) {
+    this.textViewProps.color = color
   }
 
   public getContainer(): Container {
