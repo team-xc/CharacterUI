@@ -10,6 +10,10 @@ declare type ResizeViewProps = {
   border?: boolean
 }
 
+declare type PanelViewProps = {
+  title?: string,
+}
+
 declare type TextViewProps = {
   text: string,
   border?: boolean,

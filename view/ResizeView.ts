@@ -33,7 +33,7 @@ export class ResizeView extends BaseView {
     this.#height = value
   }
 
-  private refreshView(): BaseView {
+  protected refreshView(): BaseView {
     const {border = true} = this.resizeViewProps || {}
     return new BaseView({
         width: this.width,
@@ -41,6 +41,20 @@ export class ResizeView extends BaseView {
         border
       }
     )
+  }
+
+  public renderInner(child: BaseView, x: number, y: number) {
+    if (!child) return
+    const view = this.updateView()
+    const childContainer = child.getContainer()
+    if (!childContainer) return
+    const {width, height} = this.getContainerSize(childContainer)
+    for (let i = 0; i < height; i++) {
+      for (let j = 0; j < width; j++) {
+        view.setInner(x + j, y + i, this.get(childContainer, j, i))
+      }
+    }
+    this.rerender()
   }
 
   public updateView(size: { width?: number, height?: number } = {}): BaseView {
@@ -67,17 +81,17 @@ export class ResizeView extends BaseView {
     this.lastView.trigger('re-render', this.lastView)
   }
 
-  public getContainer(): Container {
+  getContainer(): Container {
     if (!this.currentView) return []
     return this.currentView.getContainer()
   }
 
-  public getViewId(): string {
+  getViewId(): string {
     if (!this.currentView) return ''
     return this.currentView.getViewId()
   }
 
-  public getInstance(): BaseView {
+  getInstance(): BaseView {
     if (!this.currentView) return null
     return this.currentView.getInstance()
   }

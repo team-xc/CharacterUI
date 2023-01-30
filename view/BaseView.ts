@@ -1,14 +1,12 @@
 import CONFIG from '../core/config'
 
-const readline = require('readline')
-
 const {MATERIAL, SIZE} = CONFIG
 
 export class BaseView {
-  private readonly baseViewProps: ViewProps
+  protected readonly baseViewProps: ViewProps
   private container: Container
   private readonly viewId: ViewId
-  private children = new Map<ViewId, { self: BaseView, x: number, y: number }>()
+  protected children = new Map<ViewId, { self: BaseView, x: number, y: number }>()
 
   constructor(props: ViewProps) {
     const {width, height, border = true} = props
@@ -17,7 +15,7 @@ export class BaseView {
     this.generateContainer()
   }
 
-  private generateContainer() {
+  protected generateContainer() {
     const {width, height, border} = this.baseViewProps
     const container = this.generate(width, height, MATERIAL.BLANK)
 
@@ -37,7 +35,7 @@ export class BaseView {
     this.setContainer(container)
   }
 
-  private addEventListener(view: BaseView) {
+  protected addEventListener(view: BaseView) {
     view.trigger = new Proxy(view.trigger, {
       apply: (_, __, args) => {
         const [event, params] = args
@@ -187,21 +185,19 @@ export class BaseView {
     return container[y][x]
   }
 
-  public add(child: BaseView, x: number, y: number) {
+  public renderInner(child: BaseView, x: number, y: number) {
     if (!child) return
     const childContainer = child.getContainer()
+    if (!childContainer) return
     const {width, height} = this.getContainerSize(childContainer)
     for (let i = 0; i < height; i++) {
       for (let j = 0; j < width; j++) {
         this.setInner(x + j, y + i, this.get(childContainer, j, i))
       }
     }
-    if (this.children.has(child.getViewId())) return
-    this.children.set(child.getViewId(), {self: child.getInstance(), x, y})
-    this.addEventListener(child.getInstance())
   }
 
-  public remove(child: BaseView) {
+  public clearInner(child: BaseView) {
     if (!child) return
     const childContainer = child.getContainer()
     const position = this.children.get(child.getViewId())
@@ -214,8 +210,29 @@ export class BaseView {
         this.setInner(childX + j, childY + i, MATERIAL.BLANK)
       }
     }
+  }
+
+  public saveChildren(child: BaseView, x: number, y: number) {
+    if (!child) return
+    if (this.children.has(child.getViewId())) return
+    this.children.set(child.getViewId(), {self: child.getInstance(), x, y})
+    this.addEventListener(child.getInstance())
+  }
+
+  public removeChildren(child: BaseView) {
+    if (!child) return
     this.children.delete(child.getViewId())
     this.removeEventListener(child.getInstance())
+  }
+
+  public add(child: BaseView, x: number, y: number) {
+    this.renderInner(child, x, y)
+    this.saveChildren(child, x, y)
+  }
+
+  public remove(child: BaseView) {
+    this.clearInner(child)
+    this.removeChildren(child)
   }
 
   public trigger = (event: string, params?: any) => {}
