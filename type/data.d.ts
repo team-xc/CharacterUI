@@ -4,6 +4,12 @@ declare type ViewProps = {
   border?: boolean
 }
 
+declare type ResizeViewProps = {
+  width?: number,
+  height?: number,
+  border?: boolean
+}
+
 declare type TextViewProps = {
   text: string,
   border?: boolean,
