@@ -228,18 +228,8 @@ export class BaseView {
     return this.getContainer().map(row => row.join('')).join(CONFIG.MATERIAL.NEW_LINE)
   }
 
-  public drawToConsole() {
-    let last = ''
-    setInterval(() => {
-      const current = this.draw()
-      if (last !== current) {
-        readline.clearLine(process.stdout, 0)
-        readline.cursorTo(process.stdout, 0, 0)
-        process.stdout.write('\x1b[?25l')
-        process.stdout.write('\n' + current)
-        last = this.draw()
-      }
-    }, 1000 / CONFIG.FPS)
+  public render() {
+    CONFIG.RENDER_METHOD(this.draw.bind(this))
   }
 
   public loadView(view: (container: BaseView) => void) {

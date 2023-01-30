@@ -7,7 +7,7 @@ const start = () => {
     height: 6
   })
   view.loadView(Home)
-  view.drawToConsole()
+  view.render()
 }
 
 const app = () => ({

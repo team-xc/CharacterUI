@@ -1,3 +1,5 @@
+import { renderForConsole } from './render'
+
 export default {
   MATERIAL: {
     TOP_RIGHT: '┐',
@@ -14,5 +16,6 @@ export default {
     CONTAINER_SPACE: 0,
     BORDER_SIZE: 1
   },
-  FPS: 20
+  RENDER_METHOD: renderForConsole,
+  RENDER_FPS: 20
 }

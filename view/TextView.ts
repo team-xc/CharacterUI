@@ -9,9 +9,9 @@ export class TextView extends BaseView {
     super({width: 0, height: 0})
     this.options = {
       text: props.text,
+      color: props?.color ?? 0,
       border: props?.border ?? true,
-      horizontalPadding: props?.horizontalPadding ?? 0,
-      color: props?.color ?? 0
+      horizontalPadding: props?.horizontalPadding ?? 0
     }
     this.setText(props.text)
   }
