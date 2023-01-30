@@ -36,9 +36,12 @@ const createChildren = (parent: BaseView, children: object, idMap: Map<string, B
   const childrenList = Object.keys(children)
   childrenList.forEach(name => {
     if (name === '$') return
-    const childProps = children[name][0]['$']
+    const child = children[name][0]
+    const childProps = child['$']
     const {x, y} = childProps
-    parent.add(createView(name, childProps, idMap), x, y)
+    const view = createView(name, childProps, idMap)
+    parent.add(view, x, y)
+    if (child) generateLayout(view, child, idMap)
   })
   return parent
 }
