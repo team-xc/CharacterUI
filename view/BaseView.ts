@@ -248,8 +248,4 @@ export class BaseView {
   public render() {
     CONFIG.RENDER_METHOD(this.draw.bind(this))
   }
-
-  public loadView(view: (container: BaseView) => void) {
-    view(this)
-  }
 }

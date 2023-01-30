@@ -1,13 +1,11 @@
-import { BaseView } from '../view/BaseView'
-import Home from './module/home'
+import { parseLayout } from '../util/layout'
 
-const start = () => {
-  const view = new BaseView({
-    width: 50,
-    height: 6
-  })
-  view.loadView(Home)
-  view.render()
+const start = async () => {
+  const [layout, ids] = await parseLayout('home')
+
+  ids.get('time').setTextWithInterval(() => new Date().toLocaleTimeString(), 1000, true)
+
+  layout.render()
 }
 
 const app = () => ({

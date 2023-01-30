@@ -6,7 +6,16 @@ export class TextView extends ResizeView {
   constructor(props: TextViewProps) {
     super({border: props?.border || false})
     this.textViewProps = props
-    this.setText(props.text)
+    this.setText(props?.text || '')
+  }
+
+  public setTextWithInterval(textFunction: () => string, interval: number, firstRender = true) {
+    if (firstRender) {
+      this.setText(textFunction())
+    }
+    setInterval(() => {
+      this.setText(textFunction())
+    }, interval)
   }
 
   public setText(text: string) {

@@ -9,7 +9,7 @@ export class EditText extends TextView {
   constructor(props: EditTextProps) {
     super(props)
     this.editTextProps = props
-    this.text = props.text || ''
+    this.text = props?.text || ''
 
     readline.emitKeypressEvents(process.stdin)
     process.stdin.setRawMode(true)

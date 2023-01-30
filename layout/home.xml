@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<BaseView width="50" height="6">
+    <TextView id="time" x="36" y="0" border="false" color="32" horizontalPadding="1"/>
+    <EditText x="1" y="0" border="true" hint="Enter your name" horizontalPadding="1"/>
+</BaseView>
