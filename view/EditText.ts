@@ -31,13 +31,18 @@ export class EditText extends TextView {
     this.setText(this.text)
   }
 
+  private blinkBorder = () => {
+    this.setBorderStyle(this.getContainer(), '\x1b[31m')
+  }
+
   public setText(text: string) {
+    const cursor = '_'
     if (text === '') {
-      this.setColor(37)
-      super.setText(this.editTextProps?.hint || '')
+      this.setStyle('\x1b[31;2m')
+      super.setText(this.editTextProps?.hint || '', this.blinkBorder)
     } else {
-      this.setColor(0)
-      super.setText(text)
+      this.setStyle('\x1b[0m')
+      super.setText(text + cursor, this.blinkBorder)
     }
   }
 

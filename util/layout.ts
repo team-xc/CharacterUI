@@ -34,14 +34,16 @@ const createRootView = (children: object, idMap: Map<string, BaseView>): BaseVie
 
 const createChildren = (parent: BaseView, children: object, idMap: Map<string, BaseView>): BaseView => {
   const childrenList = Object.keys(children)
-  childrenList.forEach(name => {
-    if (name === '$') return
-    const child = children[name][0]
-    const childProps = child['$']
-    const {x, y} = childProps
-    const view = createView(name, childProps, idMap)
-    parent.add(view, x, y)
-    if (child) generateLayout(view, child, idMap)
+  childrenList.forEach((childName, index) => {
+    if (index === 0) return
+    const child = children[childName]
+    child.forEach(item => {
+      const childProps = item['$']
+      const {x = 0, y = 0} = childProps
+      const view = createView(childName, childProps, idMap)
+      parent.add(view, x, y)
+      if (Object.keys(item).length > 1) generateLayout(view, item, idMap)
+    })
   })
   return parent
 }

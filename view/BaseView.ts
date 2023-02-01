@@ -76,6 +76,18 @@ export class BaseView {
     }
   }
 
+  public setBorderStyle(container: Container, style: string) {
+    for (let i = 0; i < container.length; i++) {
+      for (let j = 0; j < container[i].length; j++) {
+        if (i === 0 || i === container.length - 1) {
+          container[i][j] = style + container[i][j]
+        } else if (j === 0 || j === container[i].length - 1) {
+          container[i][j] = style + container[i][j]
+        }
+      }
+    }
+  }
+
   public getViewId() {
     return this.viewId
   }

@@ -14,7 +14,8 @@ declare type TextViewProps = {
   text?: string,
   border?: boolean,
   paddingX?: number,
-  color?: number
+  style?: string,
+  color?: string | number
 }
 
 declare type EditTextProps = {

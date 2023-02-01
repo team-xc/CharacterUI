@@ -2,14 +2,14 @@ import { renderForConsole } from './render'
 
 export default {
   MATERIAL: {
-    TOP_RIGHT: '┐',
-    TOP_LEFT: '┌',
-    BOTTOM_RIGHT: '┘',
-    BOTTOM_LEFT: '└',
+    TOP_RIGHT: '╮',
+    TOP_LEFT: '╭',
+    BOTTOM_RIGHT: '╯',
+    BOTTOM_LEFT: '╰',
     HORIZONTAL: '─',
     VERTICAL: '│',
     NEW_LINE: '\n',
-    BLANK: ' ',
+    BLANK: '\x1b[90m·\x1b[0m',
     SPACE: ' '
   },
   SIZE: {
